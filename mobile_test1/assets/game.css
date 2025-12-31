@@ -1,0 +1,190 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: #000;
+    overflow: hidden;
+}
+
+.game-container {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #000428, #004e92);
+    position: relative;
+    overflow: hidden;
+}
+
+.score-board {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 100;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.game-area {
+    width: 100%;
+    height: calc(100% - 120px);
+    position: relative;
+    overflow: hidden;
+}
+
+.player {
+    position: absolute;
+    bottom: 20px;
+    font-size: 40px;
+    transform: translateX(-50%);
+    transition: left 0.1s ease;
+    filter: drop-shadow(0 0 10px #fff);
+    z-index: 10;
+}
+
+.enemy {
+    position: absolute;
+    font-size: 35px;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 0 8px #ff00ff);
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.1); }
+}
+
+.bullet {
+    position: absolute;
+    font-size: 24px;
+    color: #00ff00;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 0 6px #00ff00);
+}
+
+.controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+}
+
+.control-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 2px solid #fff;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 15px 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.6);
+}
+
+.shoot-btn {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    padding: 20px 40px;
+    font-size: 28px;
+    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+}
+
+.shoot-btn:active {
+    box-shadow: 0 2px 8px rgba(245, 87, 108, 0.6);
+}
+
+.game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    border: 3px solid #ff0000;
+    border-radius: 20px;
+    padding: 40px 60px;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+}
+
+.game-over h1 {
+    color: #ff0000;
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px #ff0000;
+    animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.game-over p {
+    color: #fff;
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.game-over button {
+    background: linear-gradient(135deg, #00ff00 0%, #00aa00 100%);
+    border: 2px solid #fff;
+    border-radius: 10px;
+    color: #000;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 15px 40px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 255, 0, 0.4);
+}
+
+.game-over button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 255, 0, 0.6);
+}
+
+/* Add stars background effect */
+.game-area::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+        radial-gradient(2px 2px at 60px 70px, #fff, transparent),
+        radial-gradient(1px 1px at 50px 50px, #eee, transparent),
+        radial-gradient(1px 1px at 130px 80px, #fff, transparent),
+        radial-gradient(2px 2px at 90px 10px, #eee, transparent);
+    background-size: 200px 200px;
+    background-repeat: repeat;
+    opacity: 0.5;
+    animation: stars 20s linear infinite;
+}
+
+@keyframes stars {
+    from { background-position: 0 0; }
+    to { background-position: 0 200px; }
+}

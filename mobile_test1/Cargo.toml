@@ -8,6 +8,8 @@ edition = "2021"
 
 [dependencies]
 dioxus = { version = "0.7.1", features = [] }
+tokio = { version = "1", features = ["time"] }
+rand = "0.8"
 
 [features]
 default = ["mobile"]
