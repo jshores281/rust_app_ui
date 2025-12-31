@@ -6,8 +6,10 @@ enum Route {
     #[layout(Navbar)]
     #[route("/")]
     Home {},
-    #[route("/blog/:id")]
-    Blog { id: i32 },
+    #[route("/utilities")]
+    Utilities {},
+    #[route("/utility/:name")]
+    Utility { name: String },
 }
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
@@ -57,26 +59,61 @@ fn Home() -> Element {
     }
 }
 
-
-
-
-
-/// Blog page
+/// Utilities list page
 #[component]
-pub fn Blog(id: i32) -> Element {
-    rsx! {
-        div { id: "blog",
+fn Utilities() -> Element {
+    let utility_list = vec![
+        "Calculator",
+        "Color Picker",
+        "Text Converter",
+        "QR Code Generator",
+        "Unit Converter",
+    ];
 
-            // Content
-            h1 { "This is blog #{id}!" }
-            p {
-                "In blog #{id}, we show how the Dioxus router works and how URL parameters can be passed as props to our route components."
+    rsx! {
+        div { id: "utilities",
+            h1 { "Utilities" }
+            p { "Select a utility from the list below:" }
+
+            div { id: "links",
+                for utility_name in utility_list {
+                    Link {
+                        to: Route::Utility {
+                            name: utility_name.to_lowercase().replace(" ", "-"),
+                        },
+                        "{utility_name}"
+                    }
+                }
+            }
+        }
+    }
+}
+
+/// Individual utility page
+#[component]
+pub fn Utility(name: String) -> Element {
+    let display_name = name.replace("-", " ")
+        .split_whitespace()
+        .map(|word| {
+            let mut chars = word.chars();
+            match chars.next() {
+                None => String::new(),
+                Some(first) => first.to_uppercase().collect::<String>() + chars.as_str(),
+            }
+        })
+        .collect::<Vec<_>>()
+        .join(" ");
+
+    rsx! {
+        div { id: "utility",
+            h1 { "{display_name}" }
+            p { "This is the {display_name} utility page." }
+
+            div { class: "utility-content",
+                p { "Utility functionality will be implemented here." }
             }
 
-            // Navigation links
-            Link { to: Route::Blog { id: id - 1 }, "Previous" }
-            span { " <---> " }
-            Link { to: Route::Blog { id: id + 1 }, "Next" }
+            Link { to: Route::Utilities {}, "← Back to Utilities" }
         }
     }
 }
@@ -87,7 +124,7 @@ fn Navbar() -> Element {
     rsx! {
         div { id: "navbar",
             Link { to: Route::Home {}, "Home" }
-            Link { to: Route::Blog { id: 1 }, "Utilies" }
+            Link { to: Route::Utilities {}, "Utilities" }
         }
 
         Outlet::<Route> {}
