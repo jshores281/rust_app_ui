@@ -171,16 +171,19 @@ fn SpaceGame() -> Element {
     };
 
     let restart_game = move |_| {
-        // Increment counter first to kill old loops and trigger new effects
-        restart_counter += 1;
-        // Then reset all game state
+        // Reset game_over FIRST so new loops see false immediately
         game_over.set(false);
-        score.set(0);
+        
+        // Clear all game state
         enemies.set(Vec::new());
         bullets.set(Vec::new());
+        score.set(0);
         player_x.set(50.0);
         next_enemy_id.set(0);
         next_bullet_id.set(0);
+        
+        // Kill old loops and trigger new ones
+        restart_counter += 1;
     };
 
     rsx! {
@@ -190,6 +193,7 @@ fn SpaceGame() -> Element {
                 div { style: "display: flex; align-items: center; gap: 20px;",
                     span { "Score: {score}" }
                     button {
+                        r#type: "button",
                         onclick: restart_game,
                         style: "background: #4a5568; border: 1px solid #fff; border-radius: 6px; color: #fff; padding: 8px 16px; cursor: pointer; font-size: 14px;",
                         "Restart Game"
@@ -201,7 +205,7 @@ fn SpaceGame() -> Element {
                 div { class: "game-over",
                     h1 { "GAME OVER!" }
                     p { "Final Score: {score}" }
-                    button { onclick: restart_game, "Restart" }
+                    button { r#type: "button", onclick: restart_game, "Restart" }
                 }
             }
 
@@ -231,9 +235,24 @@ fn SpaceGame() -> Element {
             }
 
             div { class: "controls",
-                button { class: "control-btn", onclick: move_left, "◀" }
-                button { class: "control-btn shoot-btn", onclick: shoot, "FIRE" }
-                button { class: "control-btn", onclick: move_right, "▶" }
+                button {
+                    class: "control-btn",
+                    r#type: "button",
+                    onclick: move_left,
+                    "◀"
+                }
+                button {
+                    class: "control-btn shoot-btn",
+                    r#type: "button",
+                    onclick: shoot,
+                    "FIRE"
+                }
+                button {
+                    class: "control-btn",
+                    r#type: "button",
+                    onclick: move_right,
+                    "▶"
+                }
             }
         }
     }
