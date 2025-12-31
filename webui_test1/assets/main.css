@@ -1,9 +1,18 @@
 /* App-wide styling */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-color: #0f1116;
     color: #ffffff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 #hero {
@@ -46,8 +55,12 @@ body {
 #navbar {
     display: flex;
     flex-direction: row;
-  }
-  
+    background-color: #2a2d35;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
 #navbar a {
     color: #ffffff;
     margin-right: 20px;
@@ -60,11 +73,24 @@ body {
     color: #91a4d2;
 }
 
+/* Main content area */
+main {
+    flex: 1;
+}
+
+/* Footer */
+#footer {
+    margin-top: auto;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid #333;
+}
+
 /* Blog page */
 #blog {
     margin-top: 50px;
-  }
-  
+}
+
 #blog a {
     color: #ffffff;
     margin-top: 50px;

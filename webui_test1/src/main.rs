@@ -118,15 +118,31 @@ pub fn Utility(name: String) -> Element {
     }
 }
 
-/// Shared navbar component.
+/// Shared navbar component with proper semantic structure
 #[component]
 fn Navbar() -> Element {
     rsx! {
-        div { id: "navbar",
-            Link { to: Route::Home {}, "Home" }
-            Link { to: Route::Utilities {}, "Utilities" }
-        }
+        div { style: "display: flex; flex-direction: column; min-height: 100vh;",
+            header {
+                nav { id: "navbar",
+                    Link { to: Route::Home {}, "Home" }
+                    Link { to: Route::Utilities {}, "Utilities" }
+                }
+            }
 
-        Outlet::<Route> {}
+            main { style: "flex: 1;", Outlet::<Route> {} }
+
+            Footer {}
+        }
+    }
+}
+
+/// Footer component
+#[component]
+fn Footer() -> Element {
+    rsx! {
+        footer { id: "footer",
+            p { "Built with Dioxus © 2025" }
+        }
     }
 }
