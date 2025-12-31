@@ -1,0 +1,11 @@
+emulator -list-avd
+emulator -devices
+adb
+adb devices
+emulator -list-avds
+emulator -avd Medium_Phone_API_36.1
+adb devices 
+adb logcat
+adb logcat | findstr /i "app:id/hotseat"
+adb logcat | findstr /i "panic rust RUST"
+adb logcat -c
