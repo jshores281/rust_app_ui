@@ -35,7 +35,6 @@ fn App() -> Element {
 pub fn Hero() -> Element {
     rsx! {
         div { id: "hero",
-            img { src: HEADER_SVG, id: "header" }
             div { id: "links",
                 a { href: "https://dioxuslabs.com/learn/0.7/", "📚 Learn Dioxus" }
                 a { href: "https://dioxuslabs.com/awesome", "🚀 Awesome Dioxus" }
@@ -121,12 +120,54 @@ pub fn Utility(name: String) -> Element {
 /// Shared navbar component with proper semantic structure
 #[component]
 fn Navbar() -> Element {
+    let mut menu_open = use_signal(|| false);
+
     rsx! {
         div { style: "display: flex; flex-direction: column; min-height: 100vh;",
             header {
                 nav { id: "navbar",
-                    Link { to: Route::Home {}, "Home" }
-                    Link { to: Route::Utilities {}, "Utilities" }
+                    div { class: "navbar-logo",
+                        img {
+                            src: HEADER_SVG,
+                            alt: "Logo",
+                            class: "navbar-icon",
+                        }
+                    }
+
+                    button {
+                        class: "bento-menu-button",
+                        onclick: move |_| menu_open.set(!menu_open()),
+                        div { class: "bento-icon",
+                            div { class: "bento-grid",
+                                span {}
+                                span {}
+                                span {}
+                                span {}
+                                span {}
+                                span {}
+                                span {}
+                                span {}
+                                span {}
+                            }
+                        }
+                    }
+
+                    if menu_open() {
+                        div { class: "bento-menu-dropdown",
+                            Link {
+                                to: Route::Home {},
+                                class: "bento-menu-item",
+                                onclick: move |_| menu_open.set(false),
+                                "Home"
+                            }
+                            Link {
+                                to: Route::Utilities {},
+                                class: "bento-menu-item",
+                                onclick: move |_| menu_open.set(false),
+                                "Utilities"
+                            }
+                        }
+                    }
                 }
             }
 
